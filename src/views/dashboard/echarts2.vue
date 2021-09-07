@@ -9,6 +9,10 @@
 					<bar-chart type="barChart"></bar-chart>
 				</el-col>
 			</el-row>
+      <el-row style="background:#f2f2f2" > 
+        <br/>
+      </el-row>
+
     <section class="data_section" ref="data_section">
       <el-row :gutter="10" class="row_list">
         <el-col :span="8" style="height=150px">
@@ -96,6 +100,10 @@
         </el-col>
       </el-row>
     </section>
+    <el-row style="background:#f2f2f2" > 
+        <br/>
+      </el-row>
+
 
    <el-row :gutter="10" class="row_list order_list">
 				<el-col :span="7">
@@ -111,6 +119,10 @@
       <div height="20px">
 
       </div>
+      
+      <el-row style="background:#f2f2f2" > 
+        <br/>
+      </el-row>
 
     <el-row>
       <el-col :span="12" class="chart chart_left">
