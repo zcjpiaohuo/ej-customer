@@ -3,7 +3,6 @@
      <el-row :gutter="10" class="row_list order_list">
 				<el-col :span="7">
 					<log-list></log-list>
-          <!-- <vue-calendar></vue-calendar> -->
    
 				</el-col>
 				<el-col :span="17">
@@ -14,30 +13,28 @@
       <el-row :gutter="10" class="row_list">
         <el-col :span="8" style="height=150px">
           <div class="row_left row_base">
-            <el-col :span="12" style="background: #666; height=150px">
+            <el-col :span="12" style="background: #E6A23C; height=150px">
               <div
                 class="pay saleBgcolor data_list rflex"
               >
                 <div class="leftItem cflex wflex" style="float: left">
-                  <p class="investor">123</p>
-                  <p class="number">68<span class="perTitle">(123)</span></p>
+                  <p class="investor">新增用户</p>
+                  <p class="number">68<span class="perTitle">(上涨：1%)</span></p>
                 </div>
 
                 <div class="rightItem" style="float: left;font-size:50px;padding-left: 30px;padding-top: 30px;">
-
-                  <i class="el-icon-s-promotion" sytle="font-size:30px"></i>
-                  <!-- <div class="el-icon-s-promotion"></div> -->
+                  <i class="el-icon-s-promotion" ></i>
                 </div>
               </div>
             </el-col>
-            <el-col :span="12" style="background: #232">
+            <el-col :span="12" style="background: #409EFF">
               <div class="pay taxBgcolor data_list rflex">
-                <div class="leftItem cflex wflex">
-                  <p class="investor">123</p>
-                  <p class="number">120<span class="perTitle">(%)</span></p>
+                <div class="leftItem cflex wflex" style="float: left">
+                  <p class="investor">上线人数</p>
+                  <p class="number">120<span class="perTitle">(活跃：50%)</span></p>
                 </div>
-                <div class="rightItem">
-                  <!-- <icon-svg icon-class="iconpay3" /> -->
+                 <div class="rightItem" style="float: left;font-size:50px;padding-left: 30px;padding-top: 30px;">
+                  <i class="el-icon-upload" ></i>
                 </div>
               </div>
             </el-col>
@@ -45,53 +42,53 @@
         </el-col>
         <el-col :span="16">
           <div class="row_right row_base">
-            <el-col :span="6" style="background: #758">
+            <el-col :span="6" style="background: 	#28FF28">
               <div class="extenedBgcolor data_list rflex">
-                <div class="leftItem cflex wflex">
-                  <p class="investor">456</p>
+                <div class="leftItem cflex wflex" style="float: left">
+                  <p class="investor">访问量</p>
                   <p class="number">686<span class="perTitle">(123)</span></p>
                   <p class="cardText">Decreased by 10%</p>
                 </div>
-                <div class="rightItem">
-                  <!-- <icon-svg icon-class="iconpay2" /> -->
+                <div class="rightItem" style="float: left;font-size:50px;padding-left: 30px;padding-top: 30px;">
+                  <i class="el-icon-view" ></i>
                 </div>
               </div>
             </el-col>
             <el-col :span="6" style="background: #216">
               <div class="likeBgcolor data_list rflex">
-                <div class="leftItem cflex wflex">
-                  <p class="investor">123</p>
+                <div class="leftItem cflex wflex" style="float: left">
+                  <p class="investor">处理量</p>
                   <p class="number">1276<span class="perTitle">(123)</span></p>
                   <p class="cardText">Decreased by 50%</p>
                 </div>
-                <div class="rightItem">
-                  <!-- <icon-svg icon-class="iconpay1" /> -->
+                <div class="rightItem" style="float: left;font-size:50px;padding-left: 30px;padding-top: 30px;">
+                  <i class="el-icon-s-check" ></i>
                 </div>
               </div>
             </el-col>
-            <el-col :span="6" style="background: #597">
+            <el-col :span="6" style="background: #EA0000">
               <div class="linkBgColor data_list rflex">
-                <div class="leftItem cflex wflex">
-                  <p class="investor">123</p>
+                <div class="leftItem cflex wflex" style="float: left">
+                  <p class="investor">待处理</p>
                   <p class="number">82367<span class="perTitle">(123)</span></p>
                   <p class="cardText">Decreased by 30%</p>
                 </div>
-                <div class="rightItem">
-                  <!-- <icon-svg icon-class="iconpay" /> -->
+                <div class="rightItem" style="float: left;font-size:50px;padding-left: 30px;padding-top: 30px;">
+                  <i class="el-icon-s-flag" ></i>
                 </div>
               </div>
             </el-col>
-            <el-col :span="6" style="background: #157">
+            <el-col :span="6" style="background: #FF79BC">
               <div class="keleBgColor data_list rflex">
-                <div class="leftItem cflex wflex">
-                  <p class="investor">123</p>
+                <div class="leftItem cflex wflex" style="float: left">
+                  <p class="investor">下单量</p>
                   <p class="number">
                     827373<span class="perTitle">(123)</span>
                   </p>
                   <p class="cardText">Decreased by 80%</p>
                 </div>
-                <div class="rightItem">
-                  <!-- <icon-svg icon-class="iconfufei0" /> -->
+                <div class="rightItem" style="float: left;font-size:50px;padding-left: 30px;padding-top: 30px;">
+                  <i class="el-icon-platform-eleme" ></i>
                 </div>
               </div>
             </el-col>
