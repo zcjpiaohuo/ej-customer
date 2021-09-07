@@ -145,13 +145,13 @@ export const constantRoutes = [{
         ]
     },
     {
-        path: '/table',
+        path: '/order',
         component: Layout,
         children: [{
             path: 'index',
-            name: 'Table',
+            name: 'Order',
             component: () =>
-                import ('@/views/table/index'),
+                import ('@/views/order/index'),
             meta: { title: '订单管理', icon: 'dingdan' }
         }]
     },
