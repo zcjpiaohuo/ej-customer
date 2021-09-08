@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-09-08 09:23:58
- * @LastEditTime: 2021-09-08 15:03:50
+ * @LastEditTime: 2021-09-08 18:42:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \ej-houtai\src\main.js
@@ -25,7 +25,11 @@ import '@/permission' // permission control
 import VueResource from 'vue-resource'
 
 Vue.use(VueResource);
+import * as filters from './filters/index'
 
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
