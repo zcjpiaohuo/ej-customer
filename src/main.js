@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-09-08 09:23:58
+ * @LastEditTime: 2021-09-08 15:03:50
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \ej-houtai\src\main.js
+ */
 import Vue from 'vue'
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
@@ -14,6 +22,9 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+import VueResource from 'vue-resource'
+
+Vue.use(VueResource);
 
 /**
  * If you don't want to use mock-server
@@ -34,6 +45,8 @@ Vue.use(ElementUI, { locale })
 // Vue.use(ElementUI)
 
 Vue.config.productionTip = false
+
+
 
 new Vue({
   el: '#app',
