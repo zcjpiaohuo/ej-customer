@@ -75,13 +75,13 @@
               v-if="scope.row.status == '正常'"
               type="text"
               style="color: red"
-              @click="offlineHandler(scope.row.id, $event)"
+              @click="offlineHandler(scope.row)"
               >禁用</el-button
             >
             <el-button
               v-else
               type="text"
-              @click="offlineHandler(scope.row.id, $event)"
+              @click="offlineHandler(scope.row)"
               style="color: green"
               >正常</el-button
             >
@@ -154,6 +154,29 @@
           <el-button type="primary" @click="toSavehandler">确 定</el-button>
         </div>
       </el-dialog>
+       <!-- 模态框2 -->
+         <el-dialog
+        :title="title"
+        :visible.sync="visible2"
+        @close="dialogCloseHandler"
+      >
+        <el-form :model="production" :rules="rules" ref="saveForm2">
+         
+          <el-form-item label="状态"
+           :label-width="formLabelWidth"
+            prop="status"
+           >
+          <el-radio v-model="production.status" label="正常">正常</el-radio>
+          <el-radio v-model="production.status" label="禁用">禁用</el-radio>
+   
+          
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="visible = false">取 消</el-button>
+          <el-button type="primary" @click="toSavehandler2">确 定</el-button>
+        </div>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -173,6 +196,7 @@ export default {
       categories: [],
       title: "",
       visible: false,
+       visible2: false,
       production: {},
       formLabelWidth: "80px",
       rules: {
@@ -224,12 +248,11 @@ export default {
     // 新增按钮点击事件
     toAddHandler() {
       this.production = {};
-    
       this.title = "新增商品";
       this.visible = true;
     },
   
-    // 表单保存事件
+    // 表单保存事件1
     toSavehandler() {
       this.$refs["saveForm"].validate((valid) => {
         if (valid) {
@@ -245,6 +268,22 @@ export default {
         }
       });
     },
+     // 表单保存事件2
+    toSavehandler2() {
+      this.$refs["saveForm2"].validate((valid) => {
+        if (valid) {
+          requset
+            .post("/baseUser/saveOrUpdate", qs.stringify(this.production))
+            .then((res) => {
+              this.pageQueryProductions(); // 重载数据
+              this.$message.success(res.message); // 提示操作结果信息
+              this.visible2 = false; // 关闭模态框
+            });
+        } else {
+          return false;
+        }
+      });
+    },
     // 模态框关闭的回调
     dialogCloseHandler() {
       this.$refs["saveForm"].resetFields(); // 置空表单验证
@@ -254,6 +293,12 @@ export default {
       this.production = _.clone(row); // 将当前行数据赋值给数据模型
       this.title = "编辑产品信息";
       this.visible = true;
+    },
+     // 下架、上架执行处理程序
+    offlineHandler(row) {
+      this.production = _.clone(row); // 将当前行数据赋值给数据模型
+      this.title = "请选择状态";
+      this.visible2 = true;
     },
      // 删除按钮点击事件
     editDelete(id) {
@@ -271,28 +316,7 @@ export default {
         });
       });
     },
-    // 下架、上架执行处理程序
-    offlineHandler(id, e) {
-      this.$confirm("是否确认该操作?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      }).then(() => {
-        if (e.target.innerText == "禁用") {
-          requset.get("/baseUser/saveOrUpdate", { params: { id } }).then((res) => {
-            this.production.status="禁用"
-            this.pageQueryProductions(); // 重载数据
-            this.$message.success(res.message); // 提示信息
-          });
-        } else {
-          requset.get("/baseUser/saveOrUpdate", { params: { id } }).then((res) => {
-               this.production.status="正常"
-            this.pageQueryProductions(); // 重载数据
-            this.$message.success(res.message); // 提示信息
-          });
-        }
-      });
-    },
+   
   },
   created() {
     this.pageQueryProductions(); // 分页查询产品
