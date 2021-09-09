@@ -130,6 +130,17 @@ export const constantRoutes = [{
         }]
     },
     {
+        path: '/customer',
+        component: Layout,
+        children: [{
+            path: 'index',
+            name: 'Tree',
+            component: () =>
+                import ('@/views/customer/index'),
+            meta: { title: '顾客管理', icon: 'customer' }
+        }]
+    },
+    {
         path: '/zixun',
         component: Layout,
         redirect: '/zixun/zx1',
