@@ -84,39 +84,49 @@ export const constantRoutes = [{
     {
         path: '/nested',
         component: Layout,
-        name:'account',
-        meta: { title: '账单管理',icon: 'nested'  },
-        children: [
-          {
-            path: 'customerAccount',
-            name: 'customer',
-            component: () => import('@/views/nested/customer'),
-            meta: { title: '顾客账单' }
-          },
-          {
-            path: 'employeeAccount',
-            name: 'employee',
-            component: () => import('@/views/nested/emp'),
-            meta: { title: '员工账单' }
-          },
-          {
-            path: 'systemAccount',
-            name: 'system',
-            component: () => import('@/views/nested/system'),
-            meta: { title: '系统账单' }
-          },
+        name: 'account',
+        meta: { title: '账单管理', icon: 'nested' },
+        children: [{
+                path: 'customerAccount',
+                name: 'customer',
+                component: () =>
+                    import ('@/views/nested/customer'),
+                meta: { title: '顾客账单' }
+            },
+            {
+                path: 'employeeAccount',
+                name: 'employee',
+                component: () =>
+                    import ('@/views/nested/emp'),
+                meta: { title: '员工账单' }
+            },
+            {
+                path: 'systemAccount',
+                name: 'system',
+                component: () =>
+                    import ('@/views/nested/system'),
+                meta: { title: '系统账单' }
+            },
         ]
-      },
+    },
     {
         path: '/order',
         component: Layout,
         children: [{
-            path: 'index',
-            name: 'Order',
-            component: () =>
-                import ('@/views/order/index'),
-            meta: { title: '订单管理', icon: 'dingdan' }
-        }]
+                path: 'index',
+                name: 'Order',
+                component: () =>
+                    import ('@/pages/order/index'),
+                meta: { title: '订单管理', icon: 'dingdan' }
+            },
+            {
+                path: 'detail',
+                hidden: true,
+                name: 'OrderDetail',
+                component: () =>
+                    import ('@/pages/order/details'),
+            },
+        ]
     },
     {
         path: '/tree',

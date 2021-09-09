@@ -38,6 +38,7 @@
           size="small"
           style="margin-right: 10px"
           @click="pageQueryProductions"
+          icon="el-icon-search"
           >查询</el-button
         >
       </el-form>
@@ -61,7 +62,9 @@
             </el-popover>
           </template>
         </el-table-column>
-        <el-table-column label="价格" prop="price"></el-table-column>
+        <el-table-column label="价格">
+          <template v-slot="scope"> {{ scope.row.price }} ￥ </template>
+        </el-table-column>
         <el-table-column label="状态" prop="status">
           <template v-slot="scope">
             <el-tag
@@ -81,11 +84,23 @@
         ></el-table-column>
         <el-table-column label="操作">
           <template v-slot="scope">
-            <el-button type="text">编辑</el-button>
-            <el-button v-if="scope.row.status == '正常'" type="text"
+            <el-button type="text" @click="editHandler(scope.row)"
+              >编辑</el-button
+            >
+            <el-button
+              v-if="scope.row.status == '正常'"
+              type="text"
+              style="color: red"
+              @click="offlineHandler(scope.row.id, $event)"
               >下架</el-button
             >
-            <el-button v-else type="text">上架</el-button>
+            <el-button
+              v-else
+              type="text"
+              @click="offlineHandler(scope.row.id, $event)"
+              style="color: green"
+              >上架</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -171,8 +186,9 @@
 </template>
 <script>
 import requset from "@/utils/request";
-import { mapActions } from "Vuex";
+import { mapActions } from "vuex";
 import qs from "qs";
+import _ from "lodash";
 export default {
   data() {
     return {
@@ -264,6 +280,33 @@ export default {
     dialogCloseHandler() {
       this.$refs["saveForm"].resetFields(); // 置空表单验证
     },
+    // 编辑按钮点击事件
+    editHandler(row) {
+      this.production = _.clone(row); // 将当前行数据赋值给数据模型
+      this.imageUrl = row.photo;
+      this.title = "编辑产品信息";
+      this.visible = true;
+    },
+    // 下架、上架执行处理程序
+    offlineHandler(id, e) {
+      this.$confirm("是否确认该操作?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(() => {
+        if (e.target.innerText == "下架") {
+          requset.get("/product/offline", { params: { id } }).then((res) => {
+            this.pageQueryProductions(); // 重载数据
+            this.$message.success(res.message); // 提示信息
+          });
+        } else {
+          requset.get("/product/online", { params: { id } }).then((res) => {
+            this.pageQueryProductions(); // 重载数据
+            this.$message.success(res.message); // 提示信息
+          });
+        }
+      });
+    },
   },
   created() {
     this.pageQueryProductions(); // 分页查询产品
@@ -273,7 +316,7 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style>
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;

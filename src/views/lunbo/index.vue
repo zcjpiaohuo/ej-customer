@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-09-06 17:52:25
- * @LastEditTime: 2021-09-08 17:56:44
+ * @LastEditTime: 2021-09-09 20:10:30
  * @LastEditors: LAPTOP-CC091CC3
  * @Description: In User Settings Edit
  * @FilePath: \code\houtai\src\lunbo\index.vue
@@ -34,7 +34,7 @@
               <img :src="scope.row.url" width="200" alt="图片丢失" />
           </template>
         </el-table-column>
-        <el-table-column label="状态" prop="status" >
+       <el-table-column label="状态" prop="status">
           <template v-slot="scope">
             <el-tag
               v-if="scope.row.status == '正常'"
@@ -42,16 +42,29 @@
               type="success"
               >{{ scope.row.status }}</el-tag
             >
-            <el-tag v-else size="mini" type="danger" >{{
+            <el-tag v-else size="mini" type="danger">{{
               scope.row.status
             }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="操作"> 
           <template v-slot="scope">
-            <el-button type="text">编辑</el-button>
+            <el-button type="text" @click="carouselEdit(scope.row)">编辑</el-button>
             <el-button type="text" @click="carouselDel(scope.row.id)">删除</el-button>
-            <el-button  type="text">停用</el-button>
+             <el-button
+              v-if="scope.row.status == '正常'"
+              type="text"
+              style="color: red"
+              @click="offlineHandler(scope.row)"
+              >停用</el-button
+            >
+            <el-button
+              v-else
+              type="text"
+              @click="offlineHandler(scope.row)"
+              style="color: green"
+              >正常</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -63,33 +76,36 @@
       >
         <el-form :model="production" :rules="rules" ref="saveForm">
           <el-form-item
-            label="名称"
+            label="轮播图名称"
             :label-width="formLabelWidth"
             prop="name"
           >
             <el-input v-model="production.name"></el-input>
           </el-form-item>
-
-          <el-form-item
-            label="轮播图片"
-            :label-width="formLabelWidth"
-            prop="photo"
-          >
-            <el-upload
-              class="avatar-uploader"
-              action="http://81.69.24.232/pet/jz_upload.php"
-              :show-file-list="false"
-              :on-success="handlePhotoSuccess"
-            >
-              <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
-          </el-form-item>
-          <el-form-item label="描述" :label-width="formLabelWidth">
+          <el-form-item 
+          label="轮播图描述" 
+          :label-width="formLabelWidth" 
+          prop="introduce">
             <el-input
               type="textarea"
-              v-model="production.description"
+              v-model="production.introduce"
             ></el-input>
+          </el-form-item>
+          <el-form-item
+            label="轮播图图片"
+            :label-width="formLabelWidth"
+            prop="url"
+          >
+              <el type="img"  v-model="url"></el>
+          </el-form-item>
+         <el-form-item label="状态"
+           :label-width="formLabelWidth"
+            prop="status"
+           >
+          <el-radio v-model="production.status" label="正常">正常</el-radio>
+          <el-radio v-model="production.status" label="禁用">禁用</el-radio>
+   
+          
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -97,19 +113,36 @@
           <el-button type="primary" @click="toSavehandler">确 定</el-button>
         </div>
       </el-dialog>
-      <el-dialog
+        <el-dialog
         :title="title"
-        :visible.sync="visible1"
+        :visible.sync="visible2"
         @close="dialogCloseHandler"
       >
-      <el-input v-model="production.name"></el-input>
+        <el-form :model="production" :rules="rules" ref="saveForm2">
+         
+          <el-form-item label="状态"
+           :label-width="formLabelWidth"
+            prop="status"
+           >
+          <el-radio v-model="production.status" label="正常">正常</el-radio>
+          <el-radio v-model="production.status" label="停用">停用</el-radio>
+   
+          
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="visible = false">取 消</el-button>
+          <el-button type="primary" @click="toSavehandler2">确 定</el-button>
+        </div>
       </el-dialog>
     </div>
   </div>
 </template>
 <script>
 import requset from "@/utils/request";
+import { mapActions } from "Vuex";
 import qs from "qs";
+import _ from "lodash";
 export default {
   data() {
     return {
@@ -121,31 +154,29 @@ export default {
       categories: [],
       title: "",
       visible: false,
+      visible2: false,
       production: {},
       formLabelWidth: "80px",
       imageUrl: null,
       rules: {
         name: [
-          { required: true, message: "产品名称不能为空", trigger: "blur" },
+          { required: true, message: "名称不能为空", trigger: "blur" },
         ],
-        productCategoryId: [
-          {
-            required: true,
-            message: "产品所属栏目不能为空",
-            trigger: "change",
-          },
-        ],
-        price: [
-          { required: true, message: "产品价格不能为空", trigger: "blur" },
-        ],
-        photo: [{ required: true, message: "请上传产品封面", trigger: "blur" }],
+        photo: [{ required: true, message: "请上传轮播图", trigger: "blur" }],
       },
     };
   },
   methods: {
+    ...mapActions("carousel", ["findAllCarousels"]),
     // 分页查询产品表格
     async pageQueryProductions() {
-      let res = await requset.get("/carousel/findAll");
+      for (let key in this.params) {
+        if (this.params[key] == "") {
+          delete this.params[key];
+        }
+      }
+      
+      let res = await requset.get("/carousel/query");
 
       if(res.status !== 200){
         return this.$message.error('获取失败！')}
@@ -170,11 +201,18 @@ export default {
       this.title = "新增轮播图";
       this.visible = true;
     },
+    carouselEdit(){
+      this.visible = true;
+      this.production =  _.clone(row);
+      this.imageUrl = url;
+      this.title = "编辑轮播图";
+      
+    },
     showPhoto(){
  this.production = {};
       this.imageUrl = null;
       this.title = "大屏预览";
-      this.visible1 = true;
+      this.visible = true;
     },
     async carouselDel(id){
       let res = await requset.get('/carousel/deleteById?id='+id)
@@ -184,6 +222,20 @@ export default {
       this.$message.success('删除成功！')
       this.pageQueryProductions()
     },
+     offlineHandler(row) {
+       this.visible2 = true;
+      this.production = _.clone(row); // 将当前行数据赋值给数据模型
+      this.title = "请选择状态";
+      
+    },
+    // async carouselEdit(id){
+    //   let res = await requset.post('/carousel/saveOrUpdate?id='+id)
+    //   if(res.status !== 200){
+    //     return this.$message.error('编辑失败！')
+    //   }
+    //   this.$message.success('编辑成功！')
+    //   this.pageQueryProductions()
+    // },
     // 图片上传成功的回调
     handlePhotoSuccess(res, file) {
       // 将返回的图片在线地址映射到数据模型中
@@ -200,6 +252,21 @@ export default {
               this.pageQueryProductions(); // 重载数据
               this.$message.success(res.message); // 提示操作结果信息
               this.visible = false; // 关闭模态框
+            });
+        } else {
+          return false;
+        }
+      });
+    },
+    toSavehandler2() {
+      this.$refs["saveForm2"].validate((valid) => {
+        if (valid) {
+          requset
+            .post("/carousel/saveOrUpdate", qs.stringify(this.carousel))
+            .then((res) => {
+              this.pageQueryProductions(); // 重载数据
+              this.$message.success(res.message); // 提示操作结果信息
+              this.visible2 = false; // 关闭模态框
             });
         } else {
           return false;
