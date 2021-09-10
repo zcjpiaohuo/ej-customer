@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-09-08 16:44:40
- * @LastEditTime: 2021-09-08 18:45:49
+ * @LastEditTime: 2021-09-09 14:40:27
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \course_2021_sxnd_xxtx_1-masterd:\2-综合实训-行学天下门户系统\ej\ej-houtai\src\views\nested\account\sysytem.vue
@@ -81,7 +81,7 @@
         <el-table-column label="状态" prop="status"></el-table-column>
         <el-table-column label="描述" ></el-table-column>
       </el-table>
-      <!-- 分页
+      <!-- 分页 -->
       <el-pagination
         background
         layout="prev, pager, next, sizes"
@@ -92,7 +92,7 @@
         :page-sizes="[5, 10, 15]"
         @size-change="pageSizeChangeHandler"
       >
-      </el-pagination> -->
+      </el-pagination>
     </div>
   </div>
 </template>

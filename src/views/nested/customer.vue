@@ -3,7 +3,7 @@
     <div>
       <el-date-picker
         size="small"
-        v-model="value2"
+        v-model="params.transferTime"
         type="daterange"
         align="right"
         unlink-panels
@@ -14,23 +14,24 @@
       >
       </el-date-picker>
       <el-select
-        v-model="value"
+       v-model="params.type"
         size="small"
         clearable
         placeholder="请选择类型"
       >
        <el-option label="消费" value="消费"></el-option>
-            <el-option label="充值" value="充值"></el-option>
+       <el-option label="充值" value="充值"></el-option>
       </el-select>
       <el-select
-        v-model="value"
+        v-model="params.status"
         size="small"
         clearable
         placeholder="请选择状态"
       >
-        
+         <el-option label="正常" value="正常"></el-option>
+           
       </el-select>
-      <el-select v-model="value" size="small" filterable placeholder="顾客编号">
+      <el-select v-model="params.userId" size="small" filterable placeholder="顾客编号">
         
       </el-select>
       <el-button
@@ -45,7 +46,8 @@
     </div>
     <div class="content">
       <el-table  :data="resData" style="width: 100%" size="small">
-        <el-table-column type="index" label="编号" prop="id"></el-table-column>
+      
+      <el-table-column type="index" label="编号" prop="id"></el-table-column>
         <el-table-column label="交易金额" prop="transferMoney"></el-table-column>
          <el-table-column label="交易时间">
         <template v-slot="scope">
@@ -84,10 +86,11 @@ export default {
         pageSize: 5,
       },
       resData: {},
+      categories: [],
     };
   },
   methods: {
-      
+      ...mapActions("category", ["findAllCategories"]),
 async pageQueryProductions() {
       // 过滤数据将空字符串删除
       for (let key in this.params) {
