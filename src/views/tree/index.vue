@@ -99,7 +99,7 @@
         :page-size="params.pageSize"
         :current-page="params.page"
         @current-change="pageChangeHandler"
-        :page-sizes="[6, 12, 18]"
+        :page-sizes="[6,12,18]"
         @size-change="pageSizeChangeHandler"
       >
       </el-pagination>
@@ -120,7 +120,7 @@
           <el-form-item
             label="姓名"
             :label-width="formLabelWidth"
-            prop="realname"
+
           >
            <el-input v-model="production.realname"></el-input>
           </el-form-item>
@@ -173,12 +173,14 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="visible = false">取 消</el-button>
+          <el-button @click="visible2 = false">取 消</el-button>
           <el-button type="primary" @click="toSavehandler2">确 定</el-button>
         </div>
       </el-dialog>
     </div>
+   
   </div>
+  
 </template>
 <script>
 import requset from "@/utils/request";
@@ -196,7 +198,7 @@ export default {
       categories: [],
       title: "",
       visible: false,
-       visible2: false,
+      visible2: false,
       production: {},
       formLabelWidth: "80px",
       rules: {
@@ -214,8 +216,7 @@ export default {
           { required: true, message: "电话不能为空", trigger: "blur" },
         ],
         
-      },
-    
+      },   
        radio: '1'
     };
   },
@@ -349,5 +350,8 @@ export default {
   width: 178px;
   height: 178px;
   display: block;
+}
+.el-dialog{
+  background-color: rgb(115, 210, 248);
 }
 </style>

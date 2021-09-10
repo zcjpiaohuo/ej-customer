@@ -99,11 +99,11 @@
         :page-size="params.pageSize"
         :current-page="params.page"
         @current-change="pageChangeHandler"
-        :page-sizes="[4, 8, 12]"
+        :page-sizes="[10, 15, 20]"
         @size-change="pageSizeChangeHandler"
       >
       </el-pagination>
-      <!-- 模态框 -->
+      <!-- 模态框1 -->
       <el-dialog
         :title="title"
         :visible.sync="visible"
@@ -154,7 +154,7 @@
           <el-button type="primary" @click="toSavehandler">确 定</el-button>
         </div>
       </el-dialog>
-       <!-- 模态框 -->
+       <!-- 模态框2 -->
          <el-dialog
         :title="title"
         :visible.sync="visible2"
@@ -173,7 +173,7 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="visible = false">取 消</el-button>
+          <el-button @click="visible2 = false">取 消</el-button>
           <el-button type="primary" @click="toSavehandler2">确 定</el-button>
         </div>
       </el-dialog>
@@ -190,7 +190,7 @@ export default {
     return {
       params: {
         page: 1,
-        pageSize: 4,
+        pageSize: 10,
       },
       resData: {},
       categories: [],
@@ -248,7 +248,6 @@ export default {
     // 新增按钮点击事件
     toAddHandler() {
       this.production = {};
-    
       this.title = "新增商品";
       this.visible = true;
     },
@@ -269,7 +268,7 @@ export default {
         }
       });
     },
-     // 表单保存事件
+     // 表单保存事件2
     toSavehandler2() {
       this.$refs["saveForm2"].validate((valid) => {
         if (valid) {
@@ -350,5 +349,8 @@ export default {
   width: 178px;
   height: 178px;
   display: block;
+}
+.el-dialog{
+  background-color: rgb(115, 210, 248);
 }
 </style>
