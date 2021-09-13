@@ -30,13 +30,9 @@
       >
         <el-option label="正常" value="正常"></el-option>
       </el-select>
-      <el-select
-        v-model="params.userId"
-        size="small"
-        filterable
-        placeholder="顾客编号"
-      >
-      </el-select>
+      
+        <el-input   size="small" v-model="params.userId" placeholder="请输入名称"></el-input>
+
       <el-button
         margin:5px
         type="primary"
@@ -61,6 +57,7 @@
         </el-table-column>
         <el-table-column label="交易类型" prop="type"></el-table-column>
         <el-table-column label="状态" prop="status"></el-table-column>
+         <el-table-column label="顾客编号" prop="userId"></el-table-column>
         <el-table-column label="描述"></el-table-column>
       </el-table>
       <!-- 分页 -->
@@ -178,3 +175,6 @@ export default {
   },
 };
 </script>
+<style>
+
+</style>

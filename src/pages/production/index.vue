@@ -11,7 +11,7 @@
           >添加</el-button
         >
         <el-form-item>
-          <el-input v-model="params.name" placeholder="请输入名称"></el-input>
+          <el-input  v-model="params.name" placeholder="请输入名称"></el-input>
         </el-form-item>
         <el-form-item>
           <el-select clearable v-model="params.status" placeholder="请选择状态">
