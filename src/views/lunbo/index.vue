@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-09-06 17:52:25
- * @LastEditTime: 2021-09-10 17:23:50
+ * @LastEditTime: 2021-09-13 14:24:19
  * @LastEditors: LAPTOP-CC091CC3
  * @Description: In User Settings Edit
  * @FilePath: \code\houtai\src\lunbo\index.vue
@@ -255,12 +255,12 @@ export default {
       this.title = "编辑轮播图";
       
     },
-    showPhoto(){
- this.production = {};
-      this.imageUrl = null;
-      this.title = "大屏预览";
-      this.visible = true;
-    },
+//     showPhoto(){
+//  this.production = {};
+//       this.imageUrl = null;
+//       this.title = "大屏预览";
+//       this.visible = true;
+//     },
   },
   created() {
     this.pageQueryProductions(); // 分页查询产品
